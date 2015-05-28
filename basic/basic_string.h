@@ -9,6 +9,7 @@ public:
   basic_string();
   basic_string(const basic_string &);
   basic_string(const T *);
+  basic_string &operator=(const basic_string &);
 
 private:
   T *handle;
