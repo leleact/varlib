@@ -1,2 +1,2 @@
 # varlib
-A cross platform lib
+A cross platform lib;
