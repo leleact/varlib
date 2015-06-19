@@ -2,7 +2,7 @@
 #include <time.h>
 _VARLIB_BEGIN_NAMESPACEVL
 
-namespace date
+namespace time
 {
 Date::Date()
 {

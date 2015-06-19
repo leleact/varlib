@@ -9,7 +9,7 @@
 #define _VARLIB_END_NAMESPACEVL    _VARLIB_END_NAMESPACE
 
 _VARLIB_BEGIN_NAMESPACEVL
-namespace date
+namespace time
 {
 #ifndef _DATE_H
 #define _DATE_H
