@@ -1,6 +1,15 @@
 
-namespace vl
-{
+#ifndef _VARLIB_BEGIN_NAMESPACE
+#define _VARLIB_BEGIN_NAMESPACE(x) namespace x {
+#endif
+#ifndef _VARLIB_END_NAMESPACE
+#define _VARLIB_END_NAMESPACE	}
+#endif
+
+#define _VARLIB_BEGIN_NAMESPACEVL  _VARLIB_BEGIN_NAMESPACE(vl)
+#define _VARLIB_END_NAMESPACEVL    _VARLIB_END_NAMESPACE
+
+_VARLIB_BEGIN_NAMESPACEVL
 #ifndef _BASIC_STRING_H
 #define _BASIC_STRING_H
 template <typename T>
@@ -15,4 +24,4 @@ private:
   T *handle;
 };
 #endif
-}
+_VARLIB_END_NAMESPACEVL
