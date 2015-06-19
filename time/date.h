@@ -21,7 +21,7 @@ public:
 	Date(time_t);
 	Date(const Date &);
 	Date(Date &&);
-	Date &operator=(const Date &);
+	Date operator=(const Date &);
 
 	int GetYear() {return _M_Year;}
 	int GetMonth() {return _M_Month;}
