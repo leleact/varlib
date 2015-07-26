@@ -1,20 +1,17 @@
 #include <iostream>
 #include <pthread.h>
-
-namespace varlib
-{
+#include <varlib.h>
 #ifndef _THREAD_H
 #define _THREAD_H
+_VARLIB_BEGIN_NAMESPACE(varlib)
 class Thread
 {
 friend void *pFunc(void *arg);
 public:
-	void start();
+	virtual int start();
 	virtual long run() = 0;
 private:
 	pthread_t m_pid;
 };
+_VARLIB_END_NAMESPACE
 #endif
-
-
-}
