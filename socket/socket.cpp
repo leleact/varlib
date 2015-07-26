@@ -1,1 +1,8 @@
-#include <socket/socket.h>
+#include <socket.hpp>
+namespace socket
+{
+class socket
+{
+
+};
+};
