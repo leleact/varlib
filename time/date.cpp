@@ -20,7 +20,6 @@ Date Date::operator=(const Date &d)
 	_M_Day = d._M_Day;
 	return *this;
 }
-
 }
 
 
