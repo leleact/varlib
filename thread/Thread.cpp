@@ -1,4 +1,5 @@
 #include <Thread.hpp>
+#include <typeinfo>
 _VARLIB_BEGIN_NAMESPACE(varlib)
 void *pFunc(void *arg)
 {
@@ -7,15 +8,17 @@ void *pFunc(void *arg)
 	return (void *)0;
 }
 
+Thread::~Thread()
+{
+}
+
 int Thread::start()
 {
-	int nRet = 0;
-	nRet = pthread_create(&m_pid, NULL, pFunc, (void *)this);
-	if (nRet != 0)
-		return nRet;
-	nRet = pthread_join(m_pid, NULL);
-	if (nRet != 0)
-		return nRet;
-	return 0;
+	return pthread_create(&m_pid, NULL, pFunc, (void *)this);
+}
+
+int Thread::wait_stop()
+{
+	return pthread_join(m_pid, &m_ret);
 }
 _VARLIB_END_NAMESPACE
