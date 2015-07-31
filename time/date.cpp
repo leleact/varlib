@@ -1,7 +1,6 @@
 #include "date.h"
 #include <time.h>
 _VARLIB_BEGIN_NAMESPACEVL
-
 namespace time
 {
 Date::Date()
@@ -21,6 +20,4 @@ Date Date::operator=(const Date &d)
 	return *this;
 }
 }
-
-
 _VARLIB_END_NAMESPACEVL
