@@ -91,6 +91,8 @@ flags = [
 # This part add by Lele @2015-01-01
 # --------------------------------------------- #
 '-isystem',
+'/usr/lib/gcc/x86_64-redhat-linux/5.2.0/include',
+'-isystem',
 '/usr/include/linux/',
 '-isystem',
 '/usr/include/c++/5.1.0',

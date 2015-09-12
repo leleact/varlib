@@ -17,6 +17,16 @@ int Thread::start()
 	return pthread_create(&m_pid, NULL, pFunc, (void *)this);
 }
 
+void Thread::exit()
+{
+	return pthread_exit(&m_ret);
+}
+
+void Thread::stop()
+{
+	return exit();	
+}
+
 int Thread::wait_stop()
 {
 	return pthread_join(m_pid, &m_ret);

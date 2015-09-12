@@ -10,6 +10,8 @@ friend void *pFunc(void *arg);
 public:
 	virtual ~Thread();
 	int start();
+	void exit();
+	void stop();
 	int wait_stop();
 	virtual long run() = 0;
 	pthread_t GetThreadId() { return m_pid; };
