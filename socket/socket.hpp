@@ -1,10 +1,9 @@
 
+#ifndef _SOCKET_H
+#define _SOCKET_H
 
 #include <varlib.h>
 #include <string>
-
-#ifndef _SOCKET_H
-#define _SOCKET_H
 
 BEGIN_NAMESPACE(varlib)
 BEGIN_NAMESPACE(socket)
@@ -15,6 +14,7 @@ public:
 
 	int bind();
 	int listen();
+	int accept();
 	int connect();
 	int close();
 
@@ -25,4 +25,5 @@ private:
 };
 END_NAMESPACE
 END_NAMESPACE
-#endif
+
+#endif // end of socket.hpp
