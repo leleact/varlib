@@ -35,6 +35,10 @@ public:
         pthread_mutex_unlock(&m_Mutex);
     }
 
+    ~Mutex() {
+        pthread_mutex_destory(&m_Mutex); 
+    }
+
     Mutex(const Mutex &) = delete;
     Mutex& operator=(const Mutex &) = delete;
 private:
