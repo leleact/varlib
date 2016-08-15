@@ -9,8 +9,17 @@ BEGIN_NAMESPACE(varlib)
 BEGIN_NAMESPACE(socket)
 class socket {
 public:
-	socket(char *ipaddr, unsigned short port) : m_ipaddr(ipaddr), m_port(port), m_socket(-1) {};
-	socket(std::string &ipaddr, unsigned short port) : m_ipaddr(ipaddr), m_port(port), m_socket(-1) {};
+	socket(char *ipaddr, unsigned short port) 
+		: m_ipaddr(ipaddr), m_port(port), m_socket(-1) {};
+
+	socket(std::string &ipaddr, unsigned short port) 
+		: m_ipaddr(ipaddr), m_port(port), m_socket(-1) {};
+
+	~socket()
+	{};
+
+	socket(const socket &);
+	socket &operator=(const socket &);
 
 	int bind();
 	int listen();

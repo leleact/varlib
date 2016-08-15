@@ -1,5 +1,5 @@
 #include <Mutex.hpp>
-_VARLIB_BEGIN_NAMESPACE(varlib)
+BEGIN_NAMESPACE(varlib)
 Mutex::Mutex()
 {
 	if (pthread_mutex_init(&m_mutex, NULL))
@@ -30,4 +30,4 @@ int Mutex::trylock()
 {
 	return pthread_mutex_trylock(&m_mutex);
 }
-_VARLIB_END_NAMESPACE
+END_NAMESPACE
