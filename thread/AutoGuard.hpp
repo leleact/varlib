@@ -36,7 +36,7 @@ public:
     }
 
     ~Mutex() {
-        pthread_mutex_destory(&m_Mutex); 
+        pthread_mutex_destroy(&m_Mutex); 
     }
 
     Mutex(const Mutex &) = delete;
