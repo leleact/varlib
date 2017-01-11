@@ -20,29 +20,6 @@ enum log_level {
 
 static std::string log_level_name[] = {"DEBUG", "INFO", "WARN", "ERROR", "FATAL"};
 
-class log_syn_stream {
-public:
-    static log_syn_stream& getInstance(const std::string& full_name) {
-        static log_syn_stream l(full_name); 
-        return l;
-    }
-private:
-    log_syn_stream(const std::string& full_name):
-        m_full_name(full_name), m_log_entity_stream(m_full_name.c_str(), std::iostream::app|std::iostream::binary) {}
-
-private:
-    log_syn_stream& operator<<(const std::string& string) {
-        varlib::auto_mutex m(m_mutex);
-        m_log_entity_stream << string;
-        return *this;
-    }
-
-private:
-    std::string m_full_name;
-    std::ofstream m_log_entity_stream;
-    varlib::mutex m_mutex;
-};
-
 VARLIB_LOG_NAMESPACE_END
 }
 
