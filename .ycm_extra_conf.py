@@ -43,19 +43,19 @@ flags = [
 '-x',
 'c++',
 '-isystem',
-'/usr/include',
+'/usr/local/include/c++/6.3.0/x86_64-redhat-linux/',
 '-isystem',
-'/usr/local/include',
+'/usr/local/include/c++/6.3.0/',
 '-isystem',
-'/usr/lib/gcc/x86_64-redhat-linux/5.4.0/include/',
+'/usr/include/',
 '-isystem',
-'/usr/include/c++/5.4.0/',
-'-isystem',
+'/usr/local/include/',
+'-I',
 '/home/lele/.local/include/',
-'-isystem',
+'-I',
 '/home/lele/.local/include/libxml2/',
-'-isystem',
-'./include/'
+'-I',
+'.',
 ]
 
 

@@ -29,6 +29,9 @@
 #define _VARLIB_BEGIN_NAMESPACE BEGIN_NAMESPACE(varlib)
 #define _VARLIB_END_NAMESPACE END_NAMESPACE
 
+#define VARLIB_NAMESPACE_BEGIN BEGIN_NAMESPACE(varlib)
+#define VARLIB_NAMESPACE_END END_NAMESPACE
+
 #if defined(DEBUG)
   #ifdef _WIN32
 	#define VARLIBASSERT(x) if ( !((void)0,(x))) { __debugbreak(); }
