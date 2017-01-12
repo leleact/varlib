@@ -6,6 +6,7 @@
 #include <mutex.hpp>
 #include <auto_guard.hpp>
 #include <sys/time.h>
+#include <sstream>
 VARLIB_NAMESPACE_BEGIN
 
 enum log_level {
@@ -22,13 +23,20 @@ private:
     FILE* m_fp;
     varlib::mutex m_mutex;
 public:
+    log() {}
     log(const std::string& file_name)
         :m_file_name(file_name), m_fp(fopen(m_file_name.c_str(), "wr+")) {}
     ~log() {
         if (m_fp != NULL) {
             fclose(m_fp);
-        } 
+        }
     }
+
+    void setfile(const std::string& file) {
+        m_file_name = file;
+        m_fp = fopen(m_file_name.c_str(), "wr+");
+    }
+
     void write(const std::string& str, int level) {
         varlib::auto_mutex m(m_mutex);
         if( m_fp != NULL) {
@@ -36,10 +44,11 @@ public:
             gettimeofday(&tv, NULL);
             struct tm result;
             localtime_r(&tv.tv_sec, &result);
-            char time[128 + 1] = { 0 };
-            strptime(time, "%Y-%m-%d %H:%M:%S", &result);
-            fprintf(m_fp, "[%s %03d][%s][%ld]", time, (int)tv.tv_usec/1000, get_level_name(level), pthread_self());
+            char time[100 + 1] = { 0 };
+            strftime(time, 100, "%Y-%m-%d %H:%M:%S", &result);
+            fprintf(m_fp, "[%s.%03d][%s][%ld]", time, (int)tv.tv_usec/1000, get_level_name(level), pthread_self());
             fprintf(m_fp, "%s\n" , str.c_str());
+            fflush(m_fp);
         } else {
             VARLIB_THROW_DEFAULT;
         }
@@ -68,7 +77,6 @@ private:
         }
     }
 };
-
 
 VARLIB_NAMESPACE_END
 #endif
