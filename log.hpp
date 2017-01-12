@@ -34,7 +34,7 @@ public:
 
     void setfile(const std::string& file) {
         m_file_name = file;
-        m_fp = fopen(m_file_name.c_str(), "wr+");
+        m_fp = fopen(m_file_name.c_str(), "a+");
     }
 
     void write(const std::string& str, int level) {
