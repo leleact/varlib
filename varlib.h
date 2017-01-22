@@ -41,4 +41,21 @@
 #define VARLIBASSERT(x) {}
 #endif
 
+#ifdef __cplusplus
+#define __VARLIB_FUNC__ __PRETTY_FUNCTION__
+#else
+#define __VARLIB_FUNC__ __func__
+#endif
+
+#if defined __GNUC__  && __cplusplus < 201402L
+#define DEPRECATED(func) func __attribute__ ((deprecated))
+#elif defined __GNUC__  && __cplusplus >= 201402L
+#define DEPRECATED(func) [[deprecated]] func
+#elif defined(_MSC_VER)
+#define DEPRECATED(func) __declspec(deprecated) func
+#else
+#pragma message("WARNING: You need to implement DEPRECATED for this compiler")
+#define DEPRECATED(func) func
+#endif
+
 #endif

@@ -1,17 +1,15 @@
-
 #ifndef _VARLIB_EXCEPTION_HPP
 #define _VARLIB_EXCEPTION_HPP
-
+#include <varlib.h>
 #include <stdexcept>
 #include <sstream>
 #include <string>
 #include <cstring>
 #include <cerrno>
 
-namespace varlib {
+VARLIB_NAMESPACE_BEGIN
 
 class exception : public std::exception {
-
 public:
     exception() : m_file_(""), m_line_(0), m_func_(""), m_mess_(""),m_errno_(errno) { build_what_message(); }
     exception(const std::string& _Msg) : m_file_(""), m_line_(0), m_func_(""), m_mess_(_Msg), m_errno_(errno) { build_what_message(); }
@@ -26,13 +24,18 @@ public:
         return m_message.c_str();
     }
 
-private:
+    ~exception() { }
 
-    const std::string& m_file_;
-    const std::size_t& m_line_;
-    const std::string& m_func_;
-    const std::string& m_mess_;
-    const int&         m_errno_;
+    // Use default copy constructor and assignment operator
+    exception(const exception& ) = default;
+    exception& operator=(const exception&) = default;
+
+private:
+    std::string m_file_;
+    std::size_t m_line_;
+    std::string m_func_;
+    std::string m_mess_;
+    int         m_errno_;
     std::string m_message;
 
     void build_what_message() {
@@ -49,7 +52,7 @@ private:
     }
 };
 
-}
+VARLIB_NAMESPACE_END
 
 #define VARLIB_THROW_DEFAULT { throw varlib::exception(__FILE__, __LINE__, __PRETTY_FUNCTION__); }
 #define VARLIB_THROW_COND(c)\
