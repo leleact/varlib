@@ -15,17 +15,19 @@ VARLIB_NAMESPACE_BEGIN
 enum log_level { DBG, INF, WAR, ERR, FAT };
 
 class log;
+const log_level DEFAULT_LEVEL   = INF;
+const long      DEFAULT_LOG_LEN = 100 * 1024 * 1024;
 
 class log_factory {
 public:
     log_factory();
-    log& getLogger(const std::string &log_name);
-    log& getLogger(const char*       pLogname );
+    log_factory(const long& log_mex_len, const log_level& log_level);
+    log& getLogger(const std::string &log_name, const log_level& level);
+    log& getLogger(const char*       pLogname, const log_level& level);
 
     ~log_factory();
 
 private:
-    void create_log();
 
     /* delete copy constructor and asign operator */
     log_factory(const log_factory&);
@@ -33,7 +35,8 @@ private:
 
 private:
     std::map<std::string, log*> m_logs;
-    long                        m_log_mex_len;
+    const long&                 m_log_mex_len;
+    const log_level&            m_log_level;
 };
 
 static log_factory logger;
@@ -41,7 +44,10 @@ static log_factory logger;
 class log {
 public:
     log();
-    log(const std::string& name);
+    log(const std::string& name, const log_level& level = DEFAULT_LEVEL);
+    log(const std::string& log_name, const std::string& log_date,
+            const int& log_index, const long& file_max_len,
+            const log_level& log_level);
 
     long debug(const std::string& event) {
         if ( m_log_level <= DBG)
@@ -74,6 +80,8 @@ private:
    log& operator=(const log&);
 
    long write(const std::string& event, log_level level);
+   std::string getCurrDate();
+   void initialization();
 
 private:
     std::string m_log_name;

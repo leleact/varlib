@@ -26,9 +26,9 @@ import ycm_core
 flags = [
 '-Wall',
 '-Wextra',
-'-Werror',
+#'-Werror',
 '-fexceptions',
-'-DNDEBUG',
+#'-DNDEBUG',
 # THIS IS IMPORTANT! Without a "-std=<something>" flag, clang won't know which
 # language to use when compiling headers. So it will guess. Badly. So C++
 # headers will be compiled as C headers. You don't want that so ALWAYS specify
@@ -42,6 +42,8 @@ flags = [
 # For a C project, you would set this to 'c' instead of 'c++'.
 '-x',
 'c++',
+'-isystem',
+'/usr/include/',
 '-isystem',
 '/usr/local/include/c++/6.3.0/x86_64-redhat-linux/',
 '-isystem',
