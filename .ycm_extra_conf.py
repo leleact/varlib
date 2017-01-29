@@ -43,8 +43,6 @@ flags = [
 '-x',
 'c++',
 '-isystem',
-'/usr/include/',
-'-isystem',
 '/usr/local/include/c++/6.3.0/x86_64-redhat-linux/',
 '-isystem',
 '/usr/local/include/c++/6.3.0/',

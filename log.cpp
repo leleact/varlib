@@ -51,12 +51,15 @@ log::log(const std::string& log_name, const std::string& log_date,
     initialization();
     }
 
+std::string log::getLogFileName() {
+    std::ostringstream os;
+    os << m_log_name << "." << m_log_date << "." << m_log_index << ".log";
+    return os.str();
+}
+
 void log::initialization() {
     while(1) {
-        std::string now = getCurrDate();
-        std::ostringstream os;
-        os << m_log_name << "." << now << "." << m_log_index << ".log";
-        m_log_file_name = os.str();
+        m_log_file_name = getLogFileName();
         m_file_ptr = fopen(m_log_file_name.c_str(), "a+");
         if ( !m_file_ptr) {
             // exception

@@ -81,6 +81,7 @@ private:
 
    long write(const std::string& event, log_level level);
    std::string getCurrDate();
+   std::string getLogFileName();
    void initialization();
 
 private:
