@@ -28,6 +28,7 @@ public:
         break;
       m_count--;
     }
+    return 0;
   }
 
 private:

@@ -31,5 +31,5 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 cpp_add_test(TEST_NAME auto_guard_test SOURCE_FILE auto_guard_test.cpp)
-target_include_directories(auto_guard_test PUBLIC ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(auto_guard_test PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(auto_guard_test var)

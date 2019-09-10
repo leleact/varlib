@@ -1,0 +1,37 @@
+language: cpp
+matrix:
+    include:
+        - os: linux
+          dist: bionic
+          addons:
+              apt:
+                  sources:
+                      - ubuntu-toolchain-r-test
+                  packages:
+                      - g++-7
+          compiler: gcc
+          env:
+              - COMPILER="CC=gcc-7 && CXX=g++-7"
+        - os: linux
+          dist: bionic
+          addons:
+              apt:
+                  sources:
+                      - llvm-toolchain-trusty-7
+                  packages:
+                      - clang-7
+          compiler: clang
+          env:
+              - COMPILER="CC=clang-7 && CXX=clang++-7"
+
+before_install:
+    - eval "${COMPILER}"
+
+script: ./ci/travis.sh
+
+notifications:
+    email:
+        recipients:
+            - vacp@outlook.com
+        on_success: never  # default: change
+        on_failure: always # default: always
