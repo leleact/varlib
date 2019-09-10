@@ -26,7 +26,7 @@ log& log_factory::getLogger( const char *pLogname, const log_level& level ) {
 }
 
 log_factory::~log_factory() {
-    for_each( m_logs.begin(), m_logs.end(), [](std::pair<std::string, log*>& pair) {
+    for_each( m_logs.begin(), m_logs.end(), [](const std::pair<std::string, log*>& pair) {
             delete pair.second;
             });
 }
