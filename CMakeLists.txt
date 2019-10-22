@@ -11,7 +11,6 @@ include_directories(include)
 include_directories(third_party/sqlite3/src)
 add_library(var ${SOURCE_FILES})
 
-
 enable_testing()
 add_subdirectory(test)
 add_subdirectory(third_party/sqlite3)
