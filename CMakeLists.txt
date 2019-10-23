@@ -13,13 +13,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include_directories(include)
 
-aux_source_directory(src SOURCE_FILES)
+aux_source_directory(src VARLIB_SOURCE_FILES)
 
-add_library(var_static STATIC ${SOURCE_FILES})
+add_library(var_static STATIC ${VARLIB_SOURCE_FILES})
 target_link_libraries(var_static spdlog::spdlog_header_only)
 set_target_properties(var_static PROPERTIES OUTPUT_NAME var)
 
-add_library(var_shared SHARED ${SOURCE_FILES})
+add_library(var_shared SHARED ${VARLIB_SOURCE_FILES})
 target_link_libraries(var_shared spdlog::spdlog_header_only)
 set_target_properties(var_shared PROPERTIES OUTPUT_NAME var)
 
