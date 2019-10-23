@@ -1,5 +1,5 @@
-#include "event.hpp"
 #include <iostream>
+#include <varlib/event.hpp>
 
 namespace varlib {
 
