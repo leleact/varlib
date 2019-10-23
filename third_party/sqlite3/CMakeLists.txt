@@ -1,3 +1,6 @@
+add_library(sqlite3_header_only INTERFACE)
+target_link_libraries(sqlite3_header_only INTERFACE src)
+
 add_library(sqlite3_static STATIC src/sqlite3.c)
 set_target_properties(sqlite3_static PROPERTIES OUTPUT_NAME sqlite3)
 target_link_libraries(sqlite3_static pthread dl)
