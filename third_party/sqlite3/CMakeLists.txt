@@ -1,6 +1,11 @@
-add_library(sqlite3 src/sqlite3.c)
-target_link_libraries(sqlite3 pthread dl)
+add_library(sqlite3_static STATIC src/sqlite3.c)
+set_target_properties(sqlite3_static PROPERTIES OUTPUT_NAME sqlite3)
+target_link_libraries(sqlite3_static pthread dl)
 
-add_executable(sqlite3-bin src/shell.c)
-set_target_properties(sqlite3-bin PROPERTIES OUTPUT_NAME sqlite3)
-target_link_libraries(sqlite3-bin sqlite3)
+add_library(sqlite3_shared SHARED src/sqlite3.c)
+set_target_properties(sqlite3_shared PROPERTIES OUTPUT_NAME sqlite3)
+target_link_libraries(sqlite3_shared pthread dl)
+
+add_executable(sqlite3_bin src/shell.c)
+set_target_properties(sqlite3_bin PROPERTIES OUTPUT_NAME sqlite3)
+target_link_libraries(sqlite3_bin sqlite3_static)
