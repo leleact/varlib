@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _VARLIB_LOGGER_H
-#define _VARLIB_LOGGER_H
+#ifndef _VARLIB_LOG_H
+#define _VARLIB_LOG_H
 
 #include "varlib/varlib.h"
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
