@@ -66,10 +66,14 @@ public:
 
   ~session() { _M_close_db(); }
 
-  const int exec(const char *__str) const {
+  inline const int exec(const char *__str) const {
     const int &__rc = sqlite3_exec(_M_conn, __str, nullptr, nullptr, nullptr);
     util::check(*this, __rc);
     return sqlite3_changes(_M_conn);
+  }
+
+  inline const int exec(const std::string &__str) const {
+    return exec(__str.c_str());
   }
 
   const int changes() const { return sqlite3_changes(_M_conn); }
