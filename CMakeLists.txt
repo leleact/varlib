@@ -23,6 +23,7 @@ set_target_properties(var_shared PROPERTIES OUTPUT_NAME var)
 
 add_library(var_header_only INTERFACE)
 target_include_directories(var_header_only INTERFACE include)
+target_link_libraries(var_header_only INTERFACE spdlog::spdlog_header_only)
 
 enable_testing()
 add_subdirectory(test)
