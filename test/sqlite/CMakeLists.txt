@@ -1,3 +1,3 @@
 add_executable(sqlite_test sqlite_test.cpp)
-target_link_libraries(sqlite_test var_header_only sqlite3_header_only sqlite3_static gtest_main)
+target_link_libraries(sqlite_test var_header_only sqlite3_header_only sqlite3_static gtest_main spdlog::spdlog_header_only)
 add_test(NAME sqlite_test COMMAND sqlite_test)
