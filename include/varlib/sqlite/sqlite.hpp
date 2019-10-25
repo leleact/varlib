@@ -36,6 +36,11 @@ struct util {
 class session {
   friend class stmt;
 
+  friend std::ostream &operator<<(std::ostream &__os, const session &__s) {
+    __os << "_M_db_location: " << __s._M_db_location;
+    return __os;
+  }
+
 public:
   session(const std::string &__location)
       : _M_db_location(__location), _M_conn(nullptr) {
@@ -81,6 +86,8 @@ public:
   const int err_code() const { return sqlite3_errcode(_M_conn); }
 
   const char *err_msg() const { return sqlite3_errmsg(_M_conn); }
+
+  const std::string db_location() const { return _M_db_location; }
 
 private:
   std::string _M_db_location;

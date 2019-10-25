@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <varlib/log.hpp>
+#include <varlib/singleton.hpp>
 #include <varlib/sqlite/sqlite.hpp>
 
 TEST(sqlite, session) {
@@ -37,5 +38,42 @@ TEST(sqlite, stmt) {
     int age = st.get<int>(2);
     LOGI("id = {}, name = {}, age = {}", id, name, age);
   }
+  remove("test.db");
+}
+
+template <typename T> class base {
+public:
+  void dosth() {
+    T &_d = static_cast<T &>(*this);
+    _d.do_sth();
+  }
+
+  static base &instance() {
+    static T t;
+    return t;
+  }
+
+protected:
+  base() {
+    T &_d = static_cast<T &>(*this);
+    _d.init();
+  };
+  base(const base &) = delete;
+  base operator=(const base &) = delete;
+};
+
+class A : public base<A> {
+  friend class base<A>;
+  varlib::sqlite_v3::session _M_s{"test.db"};
+
+public:
+  void init() {}
+  void do_sth() { std::cout << _M_s << std::endl; }
+};
+
+TEST(sqlite, session_in_class) {
+  //  A::instance().dosth();
+  base<A> &b = A::instance();
+  b.dosth();
   remove("test.db");
 }

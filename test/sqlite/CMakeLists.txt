@@ -1,3 +1,4 @@
 add_executable(sqlite_test sqlite_test.cpp)
-target_link_libraries(sqlite_test var_header_only sqlite3_header_only sqlite3_static gtest_main spdlog::spdlog_header_only)
+target_link_libraries(sqlite_test var_header_only gtest_main sqlite3_header_only sqlite3_static spdlog::spdlog_header_only)
+set_target_properties(sqlite_test PROPERTIES CMAKE_DEBUG_TARGET_PROPERTIES Debug)
 add_test(NAME sqlite_test COMMAND sqlite_test)
