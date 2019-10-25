@@ -37,8 +37,6 @@ private:
   };
 };
 
-template <typename T> T *singleton<T>::_M_instance = nullptr;
-
 VARLIB_NAMESPACE_END
 
 #endif
