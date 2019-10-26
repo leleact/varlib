@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <utility>
 #include <varlib/varlib.h>
+#include <vector>
 
 VARLIB_NAMESPACE_BEGIN
 
@@ -103,7 +104,11 @@ private:
   inline void _M_close_db() { sqlite3_close(_M_conn); }
 };
 
-template <typename T> struct ret_type { typedef T type; };
+template <typename T> struct ret_type {
+  using type = T;
+  using const_type = const T;
+  using collection_type = std::vector<T>;
+};
 
 class stmt {
 
@@ -417,6 +422,52 @@ void util::check(const session &__s, const int &__rc) {
     throw sqlite_exception(__rc, __s.err_msg());
   }
 }
+
+template <typename T> class manager {
+
+public:
+  static manager &instance() {
+    static T m;
+    return m;
+  }
+
+  template <typename Tp> int create(Tp &&obj) {
+    T &_derived = static_cast<T &>(*this);
+    return _derived._create(std::forward<Tp>(obj));
+  }
+
+  template <typename R, typename... K>
+  typename ret_type<R>::type read_one(K... key) {
+    T &_derived = static_cast<T &>(*this);
+    return _derived._read_one(std::forward<K...>(key)...);
+  }
+
+  template <typename R, typename... K>
+  typename ret_type<R>::collection_type read_list(K... key) {
+    T &_derived = static_cast<T &>(*this);
+    return _derived._read_list(std::forward<K...>(key)...);
+  }
+
+  template <typename R> typename ret_type<R>::collection_type read_all() {
+    T &_derived = static_cast<T &>(*this);
+    return _derived._read_all();
+  }
+
+  template <typename... Args> int update(Args... args) {
+    T &_derived = static_cast<T &>(*this);
+    return _derived._update(std::forward<Args...>(args)...);
+  }
+
+  template <typename... Args> int dispose(Args... args) {
+    T &_derived = static_cast<T &>(*this);
+    return _derived._dispose(std::forward<Args...>(args)...);
+  }
+
+protected:
+  manager() {}
+  manager(const manager &) = delete;
+  manager &operator<<(const manager &) = delete;
+};
 
 } // namespace sqlite_v3
 

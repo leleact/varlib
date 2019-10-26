@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.0.2)
 
 project(varlib C CXX)
 
+option(VARLIB_BUILD_TEST "build test" ON)
+
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -25,7 +27,11 @@ add_library(var_shared SHARED ${VARLIB_SOURCE_FILES})
 target_link_libraries(var_shared spdlog::spdlog_header_only var_header_only)
 set_target_properties(var_shared PROPERTIES OUTPUT_NAME var)
 
-enable_testing()
-add_subdirectory(test)
+if (${VARLIB_BUILD_TEST})
+    enable_testing()
+    add_subdirectory(test)
+endif()
+
 add_subdirectory(third_party/sqlite3)
 add_subdirectory(third_party/spdlog)
+add_subdirectory(third_party/googletest)
