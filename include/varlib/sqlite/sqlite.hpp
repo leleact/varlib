@@ -473,13 +473,13 @@ public:
   template <typename R, typename... K>
   typename ret_type<R>::type read_one(K... key) {
     T &_derived = static_cast<T &>(*this);
-    return _derived._read_one(std::forward<K...>(key)...);
+    return _derived._read_one(std::forward<K>(key)...);
   }
 
   template <typename R, typename... K>
   typename ret_type<R>::collection_type read_list(K... key) {
     T &_derived = static_cast<T &>(*this);
-    return _derived._read_list(std::forward<K...>(key)...);
+    return _derived._read_list(std::forward<K>(key)...);
   }
 
   template <typename R> typename ret_type<R>::collection_type read_all() {
@@ -489,12 +489,12 @@ public:
 
   template <typename... Args> int update(Args... args) {
     T &_derived = static_cast<T &>(*this);
-    return _derived._update(std::forward<Args...>(args)...);
+    return _derived._update(std::forward<Args>(args)...);
   }
 
   template <typename... Args> int dispose(Args... args) {
     T &_derived = static_cast<T &>(*this);
-    return _derived._dispose(std::forward<Args...>(args)...);
+    return _derived._dispose(std::forward<Args>(args)...);
   }
 
 protected:
