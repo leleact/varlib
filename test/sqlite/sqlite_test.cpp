@@ -57,7 +57,9 @@ class people_manager : public varlib::sqlite_v3::manager<people_manager> {
         "create table if not exists people(id TEXT primary key, age INT)");
   };
 
-  ~people_manager() { remove("test.db"); }
+  ~people_manager() {
+    //   remove("test.db");
+  }
 };
 
 TEST(sqlite, session) {
@@ -124,7 +126,6 @@ public:
 };
 
 TEST(sqlite, session_in_class) {
-  //  A::instance().dosth();
   base<A> &b = A::instance();
   b.dosth();
   remove("test.db");
@@ -159,4 +160,12 @@ TEST(sqlite, thread) {
   std::for_each(vec.begin(), vec.end(), [](const people &__p) {
     LOGI("id: {}, age: {}", __p.id, __p.age);
   });
+}
+
+TEST(sqlite, is_exists) {
+  session _s{"test.db"};
+  _s.exec("create table if not exists people(id TEXT primary key, age INT)");
+  ASSERT_FALSE(_s.is_exists("xx"));
+  ASSERT_TRUE(_s.is_exists("people"));
+  remove("test.db");
 }

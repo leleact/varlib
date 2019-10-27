@@ -29,6 +29,7 @@ private:
 };
 
 class session;
+class stmt;
 
 struct util {
   static inline void check(const session &__s, const int &__rc);
@@ -81,6 +82,10 @@ public:
   inline const int exec(const std::string &__str) const {
     return exec(__str.c_str());
   }
+
+  bool is_exists(const std::string &__table) const;
+
+  stmt statment(const std::string &__str) const;
 
   const int changes() const { return sqlite3_changes(_M_conn); }
 
@@ -421,6 +426,18 @@ void util::check(const session &__s, const int &__rc) {
   if (SQLITE_OK != __rc) {
     throw sqlite_exception(__rc, __s.err_msg());
   }
+}
+
+bool session::is_exists(const std::string &__table) const {
+  stmt _st{*this,
+           "SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?"};
+  _st.bind(1, __table);
+  _st.exec();
+  return 1 == _st.get<int>(0);
+}
+
+stmt session::statment(const std::string &__str) const {
+  return stmt(*this, __str);
 }
 
 template <typename T> class manager {
