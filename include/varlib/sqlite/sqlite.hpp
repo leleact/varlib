@@ -4,7 +4,6 @@
 #define _SQLITE_H
 
 #include <cstring>
-#include <iostream>
 #include <memory>
 #include <sqlite3.h>
 #include <sstream>
@@ -83,9 +82,9 @@ public:
     return exec(__str.c_str());
   }
 
-  bool is_exists(const std::string &__table) const;
+  inline bool is_exists(const std::string &__table) const;
 
-  stmt statment(const std::string &__str) const;
+  inline stmt statment(const std::string &__str) const;
 
   const int changes() const { return sqlite3_changes(_M_conn); }
 
@@ -155,36 +154,36 @@ public:
 
   template <typename I, typename T>
   inline void bind(const I &, const T &,
-                   const sqlite3_destructor_type & = SQLITE_TRANSIENT);
+                   const sqlite3_destructor_type & = SQLITE_TRANSIENT) const;
 
   template <typename I, typename T>
   inline void bind(const I *, const T &,
-                   const sqlite3_destructor_type & = SQLITE_TRANSIENT);
+                   const sqlite3_destructor_type & = SQLITE_TRANSIENT) const;
 
   template <typename I, typename T>
   inline void bind(const I &, const T *,
-                   const sqlite3_destructor_type & = SQLITE_TRANSIENT);
+                   const sqlite3_destructor_type & = SQLITE_TRANSIENT) const;
 
   template <typename I, typename T>
   inline void bind(const I *, const T *,
-                   const sqlite3_destructor_type & = SQLITE_TRANSIENT);
+                   const sqlite3_destructor_type & = SQLITE_TRANSIENT) const;
 
   template <typename I, typename T>
   inline void bind(const I &, const T *, const int &,
-                   const sqlite3_destructor_type & = SQLITE_TRANSIENT);
+                   const sqlite3_destructor_type & = SQLITE_TRANSIENT) const;
 
   template <typename I, typename T>
   inline void bind(const I *, const T *, const int &,
-                   const sqlite3_destructor_type & = SQLITE_TRANSIENT);
+                   const sqlite3_destructor_type & = SQLITE_TRANSIENT) const;
 
   template <typename T>
-  inline const typename ret_type<T>::type get(const int &);
+  inline const typename ret_type<T>::type get(const int &) const;
 
-  inline const int get_col_count() {
+  inline const int get_col_count() const {
     return sqlite3_column_count(_M_sqlite_stmt);
   }
 
-  inline const int exec() {
+  inline const int exec() const {
     const int rc = sqlite3_step(_M_sqlite_stmt);
     if (rc == SQLITE_ROW) {
       return ROW;
@@ -230,52 +229,59 @@ private:
 
 //{@ bind
 template <>
-inline void stmt::bind(const int &__index, const std::string &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const int &__index, const std::string &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int rc = sqlite3_bind_text(_M_sqlite_stmt, __index, __value.c_str(), -1,
                                    __sqlite_destructor);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const int &__index, const char *__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const int &__index, const char *__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int rc = sqlite3_bind_text(_M_sqlite_stmt, __index, __value, -1,
                                    __sqlite_destructor);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const int &__index, const int &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const int &__index, const int &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   int rc = sqlite3_bind_int(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const int &__index, const unsigned &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const int &__index, const unsigned &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   int rc = sqlite3_bind_int64(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const int &__index, const long &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const int &__index, const long &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   int rc = sqlite3_bind_int64(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const int &__index, const double &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const int &__index, const double &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   int rc = sqlite3_bind_double(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const std::string &__name, const std::string &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const std::string &__name, const std::string &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index =
       sqlite3_bind_parameter_index(_M_sqlite_stmt, __name.c_str());
   const int rc = sqlite3_bind_text(_M_sqlite_stmt, __index, __value.c_str(), -1,
@@ -284,8 +290,9 @@ inline void stmt::bind(const std::string &__name, const std::string &__value,
 }
 
 template <>
-inline void stmt::bind(const std::string &__name, const char *__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const std::string &__name, const char *__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index =
       sqlite3_bind_parameter_index(_M_sqlite_stmt, __name.c_str());
   const int rc = sqlite3_bind_text(_M_sqlite_stmt, __index, __value, -1,
@@ -294,8 +301,9 @@ inline void stmt::bind(const std::string &__name, const char *__value,
 }
 
 template <>
-inline void stmt::bind(const std::string &__name, const int &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const std::string &__name, const int &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index =
       sqlite3_bind_parameter_index(_M_sqlite_stmt, __name.c_str());
   int rc = sqlite3_bind_int(_M_sqlite_stmt, __index, __value);
@@ -303,8 +311,9 @@ inline void stmt::bind(const std::string &__name, const int &__value,
 }
 
 template <>
-inline void stmt::bind(const std::string &__name, const unsigned &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const std::string &__name, const unsigned &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index =
       sqlite3_bind_parameter_index(_M_sqlite_stmt, __name.c_str());
   int rc = sqlite3_bind_int64(_M_sqlite_stmt, __index, __value);
@@ -312,8 +321,9 @@ inline void stmt::bind(const std::string &__name, const unsigned &__value,
 }
 
 template <>
-inline void stmt::bind(const std::string &__name, const long &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const std::string &__name, const long &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index =
       sqlite3_bind_parameter_index(_M_sqlite_stmt, __name.c_str());
   int rc = sqlite3_bind_int64(_M_sqlite_stmt, __index, __value);
@@ -321,8 +331,9 @@ inline void stmt::bind(const std::string &__name, const long &__value,
 }
 
 template <>
-inline void stmt::bind(const std::string &__name, const double &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const std::string &__name, const double &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index =
       sqlite3_bind_parameter_index(_M_sqlite_stmt, __name.c_str());
   int rc = sqlite3_bind_double(_M_sqlite_stmt, __index, __value);
@@ -330,8 +341,9 @@ inline void stmt::bind(const std::string &__name, const double &__value,
 }
 
 template <>
-inline void stmt::bind(const char *__name, const std::string &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const char *__name, const std::string &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index = sqlite3_bind_parameter_index(_M_sqlite_stmt, __name);
   const int rc = sqlite3_bind_text(_M_sqlite_stmt, __index, __value.c_str(), -1,
                                    __sqlite_destructor);
@@ -339,8 +351,9 @@ inline void stmt::bind(const char *__name, const std::string &__value,
 }
 
 template <>
-inline void stmt::bind(const char *__name, const char *__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const char *__name, const char *__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index = sqlite3_bind_parameter_index(_M_sqlite_stmt, __name);
   const int rc = sqlite3_bind_text(_M_sqlite_stmt, __index, __value, -1,
                                    __sqlite_destructor);
@@ -348,50 +361,54 @@ inline void stmt::bind(const char *__name, const char *__value,
 }
 
 template <>
-inline void stmt::bind(const char *__name, const int &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const char *__name, const int &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index = sqlite3_bind_parameter_index(_M_sqlite_stmt, __name);
   int rc = sqlite3_bind_int(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const char *__name, const unsigned &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const char *__name, const unsigned &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index = sqlite3_bind_parameter_index(_M_sqlite_stmt, __name);
   int rc = sqlite3_bind_int64(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const char *__name, const long &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const char *__name, const long &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index = sqlite3_bind_parameter_index(_M_sqlite_stmt, __name);
   int rc = sqlite3_bind_int64(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const char *__name, const double &__value,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const char *__name, const double &__value,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index = sqlite3_bind_parameter_index(_M_sqlite_stmt, __name);
   int rc = sqlite3_bind_double(_M_sqlite_stmt, __index, __value);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const int &__index, const void *__value,
-                       const int &__size,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const int &__index, const void *__value, const int &__size,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   int rc = sqlite3_bind_blob(_M_sqlite_stmt, __index, __value, __size,
                              __sqlite_destructor);
   _M_check(rc);
 }
 
 template <>
-inline void stmt::bind(const char *__name, const void *__value,
-                       const int &__size,
-                       const sqlite3_destructor_type &__sqlite_destructor) {
+inline void
+stmt::bind(const char *__name, const void *__value, const int &__size,
+           const sqlite3_destructor_type &__sqlite_destructor) const {
   const int __index = sqlite3_bind_parameter_index(_M_sqlite_stmt, __name);
   int rc = sqlite3_bind_blob(_M_sqlite_stmt, __index, __value, __size,
                              __sqlite_destructor);
@@ -402,22 +419,22 @@ inline void stmt::bind(const char *__name, const void *__value,
 
 // {@ get
 template <>
-inline const std::string stmt::get<std::string>(const int &__index) {
+inline const std::string stmt::get<std::string>(const int &__index) const {
   const char *__raw_ptr = reinterpret_cast<const char *>(
       sqlite3_column_text(_M_sqlite_stmt, __index));
   const int __size = sqlite3_column_bytes(_M_sqlite_stmt, __index);
   return std::string(__raw_ptr, __size);
 }
 
-template <> inline const int stmt::get<int>(const int &__index) {
+template <> inline const int stmt::get<int>(const int &__index) const {
   return sqlite3_column_int(_M_sqlite_stmt, __index);
 }
 
-template <> inline const long stmt::get<long>(const int &__index) {
+template <> inline const long stmt::get<long>(const int &__index) const {
   return sqlite3_column_int64(_M_sqlite_stmt, __index);
 }
 
-template <> inline const double stmt::get<double>(const int &__index) {
+template <> inline const double stmt::get<double>(const int &__index) const {
   return sqlite3_column_double(_M_sqlite_stmt, __index);
 }
 // {@ end get
