@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _SQLITE_H
-#define _SQLITE_H
+#ifndef _VARLIB_SQLITE_H
+#define _VARLIB_SQLITE_H
 
 #include <cstring>
 #include <memory>

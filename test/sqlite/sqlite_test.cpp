@@ -57,9 +57,7 @@ class people_manager : public varlib::sqlite_v3::manager<people_manager> {
         "create table if not exists people(id TEXT primary key, age INT)");
   };
 
-  ~people_manager() {
-    //   remove("test.db");
-  }
+  ~people_manager() { remove("test.db"); }
 };
 
 TEST(sqlite, session) {
