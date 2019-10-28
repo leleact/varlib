@@ -1,0 +1,2 @@
+add_executable(sqlite_benchmark sqlite_test.cpp)
+target_link_libraries(sqlite_benchmark var_header_only gtest_main sqlite3_header_only sqlite3_static spdlog::spdlog_header_only)
